@@ -3,7 +3,7 @@ import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 const currentFilePath = fileURLToPath(import.meta.url)
-const currentDirectory = path.direname(currentFile)
+const currentDirectory = path.dirname(currentFilePath)
 const envPath = path.resolve(currentDirectory, '../../.env')
 
 dotenv.config({ path: envPath })

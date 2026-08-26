@@ -1,6 +1,6 @@
 import { logger } from "../../config/logger.js";
 
-export function errorMiddleware(err, req, res, next) {
+export function errorMiddleware(err, req, res, _next) {
     logger.error({
         err,
         requestId: req.id,
