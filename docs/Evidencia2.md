@@ -1,6 +1,6 @@
 #   Evidencia 2
 ## 26/08/2026
-### En esta sesion se realizo el app.js, server,js, eslint.config.js además de que se realizaron distintas correcciones para que poder levantar el server, se agrego tambien el archivo .nvmrc y .editorconfig
+### En esta sesión se realizo el app.js, server,js, eslint.config.js principalmente, además de que se realizaron distintas correcciones para lograr levantar el server, se agregaron tambien el archivo .nvmrc y .editorconfig
 
 El codigo de app.js
 
