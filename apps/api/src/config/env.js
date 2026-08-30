@@ -21,6 +21,10 @@ export const env = Object.freeze({
     PORT: port,
     API_PREFIX: process.env.API_PREFIX,
     CORS_ORIGIN: process.env.CORS_ORIGIN,
-    LOG_LEVEL: process.env.LOG_LEVEL
+    LOG_LEVEL: process.env.LOG_LEVEL,
+    FIREBASE_PROJECT_ID: process.env.FIREBASE_PROJECT_ID,
 })
 
+if (!env.FIREBASE_PROJECT_ID) {
+    throw new Error('FIREBASE_PROJECT_ID is required')
+}
