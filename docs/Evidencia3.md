@@ -2,6 +2,8 @@
 
 ##27/08/2026
 
+### Juan Rodolfo Mosqueda lozano
+
 En esta ocasion se levanto una base de datos en firebase para el back, ademas de instalar paquetes para poder usar firebase en visual studio, tambien se creo una nueva rama llamada feature/firebase.
 Se añadieron varios archivos nuevos en la carpeta de modules y se trabajaron en varios añadiendo codigo para el back.
 

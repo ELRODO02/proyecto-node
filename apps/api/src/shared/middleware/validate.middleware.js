@@ -1,5 +1,5 @@
 import { ZodError } from 'zod'
-import { AppError } from '../errors/app-error'
+import { AppError } from '../errors/app-error.js'
 
 export function validate(schema) {
     return function validationMiddleware(

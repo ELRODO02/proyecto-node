@@ -38,7 +38,7 @@ export function errorMiddleware(err, req, res, _next) {
         success: false,
         error: {
            code: 'INTERNAL_SERVER_ERROR',
-           message: process.env.NODE_ENV === 'production' ? 'Internal server error' : err.message
+           message: env.NODE_ENV === 'production' ? 'Internal server error' : err.message
         },
         meta: {
             requestId: req.id
