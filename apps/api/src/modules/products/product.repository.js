@@ -1,24 +1,61 @@
-// en este archivo es donde se le dice que se modifique al repositorio
-import { db } from '../../config/firebase.js'
 import { FieldValue } from 'firebase-admin/firestore'
+
+import { db } from '../../config/firebase.js'
 
 const productsCollection = db.collection('products')
 
+function mapTimestamp(value) {
+  return value?.toDate?.()?.toISOString() ?? null
+}
+
 function mapProduct(document) {
-    if (!document.exists) {
-        return null
-    }
+  if (!document.exists) {
+    return null
+  }
 
-    const data = document.data()
+  const data = document.data()
 
-    return {
-        id: document.id,
-        ...data,
-        createAt: data.createdAt?.toDate?.()?.toIOSString() ?? null,
-        updateAt: data.createdAt?.toDate?.()?.toIOSString() ?? null,
-        
+  return {
+    id: document.id,
+    ...data,
+    createdAt: mapTimestamp(data.createdAt),
+    updatedAt: mapTimestamp(data.updatedAt)
+  }
+}
 
-    }
+export async function listProducts({ limit, active }) {
+  let query = productsCollection
+    .orderBy('createdAt', 'desc')
+    .limit(limit)
+
+  if (active !== undefined) {
+    query = productsCollection
+      .where('active', '==', active)
+      .orderBy('createdAt', 'desc')
+      .limit(limit)
+  }
+
+  const snapshot = await query.get()
+
+  return snapshot.docs.map(mapProduct)
+}
+
+export async function findProductById(id) {
+  const document = await productsCollection.doc(id).get()
+  return mapProduct(document)
+}
+
+export async function findProductBySku(sku) {
+  const snapshot = await productsCollection
+    .where('sku', '==', sku)
+    .limit(1)
+    .get()
+
+  if (snapshot.empty) {
+    return null
+  }
+
+  return mapProduct(snapshot.docs[0])
 }
 
 export async function createProduct(data) {
@@ -29,45 +66,23 @@ export async function createProduct(data) {
     createdAt: FieldValue.serverTimestamp(),
     updatedAt: FieldValue.serverTimestamp()
   })
+
   const created = await productRef.get()
   return mapProduct(created)
-  }
+}
 
-  export async function findProductById(id) {
-    const product = await productsCollection.doc(id).get()
-    return mapProduct(product)
-  }
+export async function updateProduct(id, data) {
+  const productRef = productsCollection.doc(id)
 
-  export async function listProducts({ limit, active}) {
-    let query = productsCollection.orderBy('createdAt', 'desc').limit(limit)
+  await productRef.update({
+    ...data,
+    updatedAt: FieldValue.serverTimestamp()
+  })
 
-    if (active !== undefined) {
-        query = productsCollection.where('active', '==', active).orderBy('createdAt', 'desc').limit(limit)
-    }
-    const products = await query.get()
-    return products.docs.map(mapProduct)
-  }
+  const updated = await productRef.get()
+  return mapProduct(updated)
+}
 
-  export async function updateProduct(id, data) {
-    const productToUpdate = productsCollection.doc(id)
-    await productToUpdate.update({
-        ...data,
-        updatedAt: FieldValue.serverTimestamp()
-    })
-    const product = await productToUpdate.get()
-    return mapProduct(product)
-  }
-
-  export async function deleteProduct(id) {
-    await productsCollection.doc(id).delete()
-  }
-
-  export async function findProductBySku(sku) {
-    const product = await productsCollection.where('sku', '==', sku).limit(1).get()
-
-    if (product.empty) {
-        return null
-    }
-
-    return mapProduct(product.docs[0])
-  }
+export async function deleteProduct(id) {
+  await productsCollection.doc(id).delete()
+}
