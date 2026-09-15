@@ -17,7 +17,7 @@ import * as userRepository from '../users/user.repository.js'
 import * as authRepository from './auth.repository.js'
 
 
-function issueTokens(user) {
+function issueTokens (user) {
   const payload = {
     sub: user.id,
     role: user.role
@@ -30,7 +30,7 @@ function issueTokens(user) {
 }
 
 
-export async function register(data) {
+export async function register (data) {
   const existingUser = await userRepository.findByEmail(data.email)
 
   if (existingUser) {
@@ -63,7 +63,7 @@ export async function register(data) {
 }
 
 
-export async function login(data) {
+export async function login (data) {
   const user = await userRepository.findByEmail(data.email)
 
   if (!user) {
@@ -101,7 +101,7 @@ export async function login(data) {
 }
 
 
-export async function refresh(refreshToken) {
+export async function refresh (refreshToken) {
   let payload
 
   try {
