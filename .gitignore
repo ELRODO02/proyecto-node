@@ -16,3 +16,8 @@ dist/
 build/
 #service account
 apps/api/secrets/*.json
+#.nuxt
+apps/web/.nuxt/
+apps/web/.output/
+apps/api/secrets/
+apps/web/node_modules
