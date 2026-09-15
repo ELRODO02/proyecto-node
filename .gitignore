@@ -21,3 +21,4 @@ apps/api/secrets/*.json
 apps/web/.nuxt/
 apps/web/.output/
 apps/api/secrets/
+app/web/node_modules
