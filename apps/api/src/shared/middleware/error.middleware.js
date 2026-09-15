@@ -1,12 +1,16 @@
 import { logger } from '../../config/logger.js'
 
 export function errorMiddleware(err, req, res, _next) {
+  console.error('===== ERROR REAL =====')
+  console.error(err)
+  console.error('======================')
+  
   const statusCode = err.statusCode ?? 500
 
   if (statusCode < 500) {
     logger.warn(
       {
-        error: err,
+        err,
         requestId: req.id,
         method: req.method,
         url: req.originalUrl
@@ -16,7 +20,7 @@ export function errorMiddleware(err, req, res, _next) {
   } else {
     logger.error(
       {
-        error: err,
+        err,
         requestId: req.id,
         method: req.method,
         url: req.originalUrl
