@@ -1,6 +1,10 @@
 # Juan Rodolfo Mosqueda Lozano 
 
-# 13/09/2026
+# 14/09/2026
+
+En esta sesión se implementó un sistema de roles y permisos para controlar qué acciones puede realizar cada tipo de usuario dentro de la aplicación. En permissions.js se definieron los permisos correspondientes a los roles CUSTOMER, ADMIN y SUPER_ADMIN, mientras que en authorize.middleware.js se creó un middleware encargado de verificar si el usuario autenticado cuenta con el permiso necesario antes de acceder a una operación específica.
+
+También se modificaron las rutas de productos para proteger las acciones de crear, actualizar y eliminar productos mediante permisos de administrador. Finalmente, se creó el script promote-admin.js, que permite buscar a un usuario por su correo electrónico en la base de datos y cambiar su rol a ADMIN, facilitando la asignación de privilegios administrativos dentro del sistema.
 
 
 Codigo de permissions.js
